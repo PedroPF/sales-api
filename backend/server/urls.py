@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.views.generic import TemplateView
+from server.sales.views import AgentView, ReportView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('agent/', AgentView.as_view()),
+    path('report/', ReportView.as_view()),
     re_path(r'^.*', TemplateView.as_view(template_name="home.html"), name="home"),
 ]
