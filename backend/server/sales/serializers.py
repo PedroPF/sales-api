@@ -9,6 +9,11 @@ class AgentSerializer(serializers.ModelSerializer):
 
 
 class ReportSerializer(serializers.ModelSerializer):
+    agent_name = serializers.SerializerMethodField('get_agent_name')
+
+    def get_agent_name(self, obj):
+        return obj.agent.name
+
     class Meta:
         model = Report
-        fields = ('agent.name', 'period', 'volume')
+        fields = ('agent_name', 'period', 'volume')
