@@ -1,3 +1,21 @@
-<p>
-  home works!
-</p>
+<ul class="nav nav-tabs nav-padding">
+  <li class="nav-item">
+    <a class="nav-link tab-text" href="#" [ngClass]="{'active': this.chosenTab == 'Agents'}"
+      (click)="onClick('Agents')">
+      Agents
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tab-text" href="#" [ngClass]="{'active': this.chosenTab == 'Reports'}"
+      (click)="onClick('Reports')">
+      Reports
+    </a>
+  </li>
+</ul>
+
+<div *ngIf="this.chosenTab == 'Agents'">
+  <app-agents class="tab-content"></app-agents>
+</div>
+<div *ngIf="this.chosenTab == 'Reports'">
+  <app-reports class="tab-content"></app-reports>
+</div>

@@ -10,6 +10,8 @@ from datetime import datetime
 
 
 class AgentView(views.APIView):
+    authentication_classes = []
+
     def post(self, request):
         try:
             new_agent = Agent()
@@ -20,7 +22,7 @@ class AgentView(views.APIView):
             new_agent.save()
             return JsonResponse({}, status=201)
         except Exception as e:
-            return JsonResponse({}, status=503)
+            return JsonResponse({}, status=400)
 
 
     def get(self, request):
@@ -29,6 +31,8 @@ class AgentView(views.APIView):
 
 
 class ReportView(views.APIView):
+    authentication_classes = []
+
     def post(selfs, request):
         try:
             new_report = Report(agent=Agent.objects.get(id=request.data['agent_id']))
@@ -37,7 +41,7 @@ class ReportView(views.APIView):
             new_report.save()
             return JsonResponse({}, status=201)
         except Exception as e:
-            return JsonResponse({}, status=503)
+            return JsonResponse({}, status=400)
 
     def get(self, request):
         agent_id = request.query_params.get('agent_id')

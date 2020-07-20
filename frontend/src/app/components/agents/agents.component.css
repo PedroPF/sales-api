@@ -1,0 +1,29 @@
+.fit-width {
+    width: inherit;
+}
+
+.table-font thead tr th {
+    font-size: small;
+}
+
+.table-font tbody tr td {
+    font-size: small;
+}
+
+.btn-font {
+    font-size: small;
+}
+
+.form-font div label {
+    font-size: small;
+}
+
+.input-font div input {
+    font-size: small;
+}
+
+.scroll-table {
+    overflow-y: auto;
+    max-height: 50vh;
+    width: inherit;
+}

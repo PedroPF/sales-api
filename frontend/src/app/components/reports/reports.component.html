@@ -1,0 +1,78 @@
+<div class="fit-width">
+  <div class="row" style="padding-left: 10px;">
+    <button type="button" class="btn btn-outline-primary btn-font btn-margin" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseCard">
+      New Report
+    </button>
+
+    <div ngbDropdown>
+      <button class="btn btn-outline-primary btn-font btn-margin" id="dropdownBasic1" ngbDropdownToggle>Filter by Agent</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem class="btn-font" *ngFor="let name of names" (click)="onFilter(name)">{{ name }}</button>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-outline-primary btn-font btn-margin" (click)="clearFilter()">
+      Clear filter
+    </button>
+  </div>
+  <div id="collapseCard" [ngbCollapse]="isCollapsed">
+    <div class="card col-md-8">
+      <div class="card-body">
+        <form [formGroup]="newReportForm" (ngSubmit)="onSubmit(newReportForm.value)">
+          <div class="form-font input-font">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="agent_name">
+                  Agent
+                </label>
+                <select class="form-control option-font" id="agent_name" formControlName="agent_name">
+                  <option *ngFor="let name of names">{{ name }}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="volume">
+                  Volume
+                </label>
+                <input class="form-control" id="volume" type="number" formControlName="volume">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="period">
+                  Reference Period
+                </label>
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" type="text" ngbDatepicker #d1="ngbDatepicker" id="period" formControlName="period">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary fa fa-calendar" (click)="d1.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-outline-secondary btn-font row" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-table col-md-12">
+    <table class="table table-striped table-font">
+      <thead>
+        <tr>
+          <th scope="col">Agent</th>
+          <th scope="col">Reference Period</th>
+          <th scope="col">Volume</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of filtered_reports">
+          <td>{{ report.agent_name }}</td>
+          <td>{{ report.period | date:"yyyy, MMMM" }}</td>
+          <td>{{ report.volume | currency:"USD" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
