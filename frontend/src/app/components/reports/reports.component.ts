@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reports',
@@ -8,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
+  public environment = environment;
   public isCollapsed = true;
   public newReportForm;
   public names: string[] = [];
@@ -56,6 +58,7 @@ export class ReportsComponent implements OnInit {
   }
 
   clearFilter(){
+    this.filter = '';
     this.filtered_reports = this.reports;
   }
 

@@ -70,7 +70,7 @@
         <tr *ngFor="let report of filtered_reports">
           <td>{{ report.agent_name }}</td>
           <td>{{ report.period | date:"yyyy, MMMM" }}</td>
-          <td>{{ report.volume | currency:"USD" }}</td>
+          <td>{{ report.volume | currency:environment.currency }}</td>
         </tr>
       </tbody>
     </table>
