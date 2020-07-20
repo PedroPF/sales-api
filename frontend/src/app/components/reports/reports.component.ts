@@ -13,7 +13,7 @@ export class ReportsComponent implements OnInit {
   public names: string[] = [];
   public filter: string = '';
   public filtered_reports: any[] = [];
-  public reports: any[] = []
+  public reports: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
     this.newReportForm = this.formBuilder.group({
@@ -21,14 +21,16 @@ export class ReportsComponent implements OnInit {
       volume: '',
       period: '',
     });
-
+    
     this.updateReports();
+
 
     this.http.get<any[]>('/agent/').subscribe(msg => {
       msg.forEach(element => {
-        this.names.push(element['name']); 
+        this.names.push(element['name']);
       });
-    })
+      this.newReportForm.patchValue({ agent_name: this.names[0] });
+    });
   }
 
   updateReports(){
@@ -57,7 +59,24 @@ export class ReportsComponent implements OnInit {
     this.filtered_reports = this.reports;
   }
 
+  insertReport(value){
+    const newReport = {
+      agent_name: value['agent_name'],
+      volume: value['volume'],
+      period: `${value['period']['year']}, ${value['period']['month']}`
+    }
+    return this.http.post('/report/', newReport);
+  }
+
+  chooseAgent(name) {
+    this.newReportForm.agent_name = name;
+    return false
+  }
+
   onSubmit(value){
+    this.insertReport(value).subscribe( () => {
+      this.updateReports();
+    });
     return false;
   }
 

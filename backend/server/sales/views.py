@@ -35,9 +35,16 @@ class ReportView(views.APIView):
 
     def post(selfs, request):
         try:
-            new_report = Report(agent=Agent.objects.get(id=request.data['agent_id']))
+            new_report = Report(agent=Agent.objects.get(name=request.data['agent_name']))
             new_report.volume = request.data['volume']
-            new_report.period = datetime.strptime(request.data['period'], '%Y, %B').date()
+
+            period = request.data.get('period', False)
+            if period:
+                period = datetime.strptime(request.data['period'], '%Y, %m').date()
+            else:
+                period = datetime.today().replace(day=1)
+
+            new_report.period = period
             new_report.save()
             return JsonResponse({}, status=201)
         except Exception as e:

@@ -37,22 +37,23 @@ export class AgentsComponent implements OnInit {
       birthday: `${value['birthday']['year']}-${value['birthday']['month']}-${value['birthday']['day']}`,
       hire_date: `${value['hire_date']['year']}-${value['hire_date']['month']}-${value['hire_date']['day']}`,
     }
-    this.http.post('/agent/', newAgent).subscribe(() => console.log('ok'));
+    return this.http.post('/agent/', newAgent);
   }
 
   ngOnInit() {
   }
 
   onSubmit(value){
-    console.log(value);
     this.newAgentForm = this.formBuilder.group({
       name: '',
       city: '',
       birthday: '',
       hire_date: '',
     })
-    this.insertAgent(value)
-    this.updateAgents();
+    
+    this.insertAgent(value).subscribe( () => {
+      this.updateAgents();
+    });
     return false;
   }
 }
