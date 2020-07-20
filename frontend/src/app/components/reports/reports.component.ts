@@ -68,11 +68,6 @@ export class ReportsComponent implements OnInit {
     return this.http.post('/report/', newReport);
   }
 
-  chooseAgent(name) {
-    this.newReportForm.agent_name = name;
-    return false
-  }
-
   onSubmit(value){
     this.insertReport(value).subscribe( () => {
       this.updateReports();
