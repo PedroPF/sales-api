@@ -2,22 +2,10 @@
     width: inherit;
 }
 
-.table-font thead tr th {
-    font-size: small;
-}
-
-.table-font tbody tr td {
-    font-size: small;
-}
-
-.btn-font {
-    font-size: small;
-}
-
-.form-font div label {
-    font-size: small;
-}
-
+.table-font thead tr th,
+.table-font tbody tr td,
+.btn-font,
+.form-font div label,
 .input-font div input {
     font-size: small;
 }

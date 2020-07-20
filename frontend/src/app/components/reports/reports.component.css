@@ -2,23 +2,13 @@
     width: inherit;
 }
 
-.table-font thead tr th {
-    font-size: small;
-}
-
-.table-font tbody tr td {
-    font-size: small;
-}
-
-.btn-font {
-    font-size: small;
-}
-
-.form-font div label {
-    font-size: small;
-}
-
-.input-font div input {
+.table-font thead tr th,
+.table-font tbody tr td,
+.btn-font,
+.form-font div label,
+.input-font div input,
+.option-font,
+.option-font option {
     font-size: small;
 }
 
@@ -26,14 +16,6 @@
     overflow-y: auto;
     max-height: 50vh;
     width: inherit;
-}
-
-.option-font {
-    font-size: small;
-}
-
-.option-font option {
-    font-size: small;
 }
 
 .btn-margin {
