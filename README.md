@@ -1,9 +1,30 @@
-# Build Angular
-to build Angular into Django static folder use 
+# Installation
 
-```
-ng build
-```
+## Backend
+
+Built with python 3.8.4.
+
+0. Go to '/sales-api/backend' folder
+
+1. Run 'pip install -r requirements.txt' to install pip dependencies
+
+2. Run 'python manage.py migrate' to build SQLite database
+
+3. Run 'python manage.py createsuperuser' to create a super user to access /admin/ path
+
+4. Run 'python manage.py runserver' to start the server
+
+## Frontend
+
+Built with Angular 10.0.4/Angular CLI 10.0.3, installation instructions can be found here https://angular.io/guide/setup-local
+
+0. Go to '/sales-api/frontend' folder
+
+1. Run 'npm install'
+
+2. Run 'ng build --prod'
+
+The website should now be up and running on 127.0.0.1:8000
 
 # API
 
