@@ -17,6 +17,7 @@
     </button>
   </div>
   <div id="collapseCard" [ngbCollapse]="isCollapsed">
+    <ngb-alert *ngIf="alert.open" (close)="alert.open=false">{{ alert.error }}</ngb-alert>
     <div class="card col-md-8">
       <div class="card-body">
         <form [formGroup]="newReportForm" (ngSubmit)="onSubmit(newReportForm.value)">

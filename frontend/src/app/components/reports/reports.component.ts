@@ -16,6 +16,7 @@ export class ReportsComponent implements OnInit {
   public filter: string = '';
   public filtered_reports: any[] = [];
   public reports: any[] = [];
+  public alert;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
     this.newReportForm = this.formBuilder.group({
@@ -23,7 +24,12 @@ export class ReportsComponent implements OnInit {
       volume: '',
       period: '',
     });
-    
+
+    this.alert = {
+      open: false,
+      error: '',
+    }
+
     this.updateReports();
 
 
@@ -38,7 +44,6 @@ export class ReportsComponent implements OnInit {
   updateReports(){
     this.http.get<any[]>('/report/').subscribe( msg => {
       this.reports = msg;
-      console.log(this.reports);
       this.filterReports();
     })
   }
@@ -72,8 +77,18 @@ export class ReportsComponent implements OnInit {
   }
 
   onSubmit(value){
-    this.insertReport(value).subscribe( () => {
+    this.insertReport(value).subscribe(() => {
+      this.newReportForm = this.formBuilder.group({
+        agent_name: this.names[0],
+        volume: '',
+        period: '',
+      });
       this.updateReports();
+      this.alert.open = false;
+    },
+    err => {
+      this.alert.error = err.error['reason'];
+      this.alert.open = true;
     });
     return false;
   }

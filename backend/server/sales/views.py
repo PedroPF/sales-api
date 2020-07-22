@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework import views
 from server.sales.models import Agent, Report
 from server.sales.serializers import AgentSerializer, ReportSerializer
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # Create your views here.
@@ -35,20 +35,27 @@ class ReportView(views.APIView):
 
     def post(selfs, request):
         try:
-            new_report = Report(agent=Agent.objects.get(name=request.data['agent_name']))
+            agent = Agent.objects.get(name=request.data['agent_name'])
+            new_report = Report(agent=agent)
             new_report.volume = request.data['volume']
 
             period = request.data.get('period', False)
             if period:
                 period = datetime.strptime(request.data['period'], '%Y, %m').date()
+                if period > datetime.today().date():
+                    return JsonResponse({'reason': 'Future date'}, status=400)
             else:
-                period = datetime.today().replace(day=1)
+                period = datetime.today().date().replace(day=1)
+
+            if period.year < agent.hire_date.year or\
+                    (period.month < agent.hire_date.month and period.year == agent.hire_date.year):
+                return JsonResponse({'reason': 'Report before hiring'}, status=400)
 
             new_report.period = period
             new_report.save()
             return JsonResponse({}, status=201)
         except Exception as e:
-            return JsonResponse({}, status=400)
+            return JsonResponse({'reason': 'Repeated date'}, status=400)
 
     def get(self, request):
         agent_id = request.query_params.get('agent_id')
