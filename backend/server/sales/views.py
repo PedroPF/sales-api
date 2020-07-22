@@ -4,6 +4,7 @@ from rest_framework import views
 from server.sales.models import Agent, Report
 from server.sales.serializers import AgentSerializer, ReportSerializer
 from datetime import datetime, timedelta
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -21,8 +22,10 @@ class AgentView(views.APIView):
             new_agent.birthday = request.data['birthday']
             new_agent.save()
             return JsonResponse({}, status=201)
-        except Exception as e:
+        except IntegrityError as e:
             return JsonResponse({'reason': 'Repeated Agent name'}, status=400)
+        except Exception as e:
+            return JsonResponse({'reason': e.__class__.__name__}, status=400)
 
 
     def get(self, request):
@@ -54,8 +57,10 @@ class ReportView(views.APIView):
             new_report.period = period
             new_report.save()
             return JsonResponse({}, status=201)
+        except IntegrityError as e:
+            return JsonResponse({'reason': 'Repeated date and Agent combination'}, status=400)
         except Exception as e:
-            return JsonResponse({'reason': 'Repeated date'}, status=400)
+            return JsonResponse({'reason': e.__class__.__name__}, status=400)
 
     def get(self, request):
         agent_id = request.query_params.get('agent_id')
