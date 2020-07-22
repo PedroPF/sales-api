@@ -10,6 +10,7 @@
       <div class="card-body">
         <form [formGroup]="newAgentForm" (ngSubmit)="onSubmit(newAgentForm.value)">
           <div class="form-font input-font">
+            <ngb-alert *ngIf="alert.open" (close)="alert.open=false">{{ alert.error }}</ngb-alert>
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">

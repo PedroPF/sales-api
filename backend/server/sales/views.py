@@ -22,7 +22,7 @@ class AgentView(views.APIView):
             new_agent.save()
             return JsonResponse({}, status=201)
         except Exception as e:
-            return JsonResponse({}, status=400)
+            return JsonResponse({'reason': 'Repeated Agent name'}, status=400)
 
 
     def get(self, request):

@@ -11,6 +11,7 @@ export class AgentsComponent implements OnInit {
   public isCollapsed = true;
   public newAgentForm;
 
+  public alert;
   public agents: any = [];
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { 
@@ -20,6 +21,11 @@ export class AgentsComponent implements OnInit {
       birthday: '',
       hire_date: '',
     });
+
+    this.alert = {
+      open: false,
+      error: '',
+    }
 
     this.updateAgents();
   }
@@ -49,10 +55,15 @@ export class AgentsComponent implements OnInit {
       city: '',
       birthday: '',
       hire_date: '',
-    })
+    });
     
     this.insertAgent(value).subscribe( () => {
       this.updateAgents();
+      this.alert.open = false;
+    },
+    err => {
+      this.alert.error = err.error['reason'];
+      this.alert.open = true;
     });
     return false;
   }

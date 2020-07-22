@@ -77,12 +77,13 @@ export class ReportsComponent implements OnInit {
   }
 
   onSubmit(value){
+    this.newReportForm = this.formBuilder.group({
+      agent_name: this.names[0],
+      volume: '',
+      period: '',
+    });
+    
     this.insertReport(value).subscribe(() => {
-      this.newReportForm = this.formBuilder.group({
-        agent_name: this.names[0],
-        volume: '',
-        period: '',
-      });
       this.updateReports();
       this.alert.open = false;
     },
